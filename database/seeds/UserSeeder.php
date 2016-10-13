@@ -20,9 +20,5 @@ class UserSeeder extends Seeder
             'remember_token' => str_random(10),
             'active' => '1',
         ]);
-
-        //Generate 20 random Users
-        factory(User::class, 20)->create();
-
     }
 }

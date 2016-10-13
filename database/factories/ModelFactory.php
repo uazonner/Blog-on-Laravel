@@ -30,7 +30,7 @@ $factory->define(App\Models\Post::class, function (Faker\Generator $faker) {
         'alias' => $faker->slug,
         'body' => $faker->text(600),
         'body_preview' => $faker->text(250),
-        'author_id' => rand(1,20),
+        'author_id' => 1,
         'published' => $faker->boolean(50),
     ];
 });

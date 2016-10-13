@@ -1,4 +1,7 @@
 @extends('layouts.app')
-@section('content')
+{{--@section('content')
     <h2>Секция контент</h2>
-@endsection
+    @foreach($posts as $post)
+        {{ $post->title }}
+    @endforeach
+@endsection--}}
