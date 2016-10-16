@@ -14,8 +14,8 @@ class UserSeeder extends Seeder
     {
         // Creates admin a site
         User::create([
-            'name' => 'admin',
-            'email' => 'uazonner@gmail.com',
+            'name' => 'Alex_K',
+            'email' => 'alex_k@gmail.com',
             'password' => bcrypt('270688'),
             'remember_token' => str_random(10),
             'active' => '1',

@@ -75,11 +75,11 @@
                 var subTimeout;
                 $this.hover(function () {
                     window.clearTimeout(subTimeout);
-                    $this.children('.dropdown-menu').show();
+                    $this.children('.dropdown-header').show();
                     // always close submenu siblings instantly
-                    $this.siblings().children('.dropdown-menu').hide();
+                    $this.siblings().children('.dropdown-header').hide();
                 }, function () {
-                    var $submenu = $this.children('.dropdown-menu');
+                    var $submenu = $this.children('.dropdown-header');
                     subTimeout = window.setTimeout(function () {
                         $submenu.hide();
                     }, settings.delay);

@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en">
 
+<div id="preloader">
+    <div id="status">&nbsp;</div>
+</div>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +12,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>BrainStorm blog</title>
+    @yield('title')
 
     <!-- Styles -->
     <link href="{!! asset('css/preload.css') !!}" rel="stylesheet">
@@ -26,10 +29,6 @@
         ]); ?>
     </script>
 </head>
-<div id="preloader">
-    <div id="status">&nbsp;</div>
-</div>
-
 <body>
 <div id="sb-site">
 <div class="boxed">
@@ -51,34 +50,59 @@
                     <li><a href="#" class="animated fadeIn animation-delay-6 flickr"><i class="fa fa-flickr"></i></a></li>
                 </ul>
 
-                <div class="dropdown animated fadeInDown animation-delay-11">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Авторизация</a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-login-box animated flipCenter">
-                        <form role="form">
-                            <h4>Форма входа</h4>
+                @if (Auth::guest())
+                    <div class="dropdown animated fadeInDown animation-delay-11">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Авторизация</a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-login-box animated flipCenter">
+                            <form id="simplelogin" role="form" method="POST" action="{{ url('/simplelogin') }}">
+                                {{ csrf_field() }}
+                                <h4>Форма входа</h4>
 
-                            <div class="form-group">
-                                <div class="input-group login-input">
-                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                    <input type="text" class="form-control" placeholder="Имя пользователя">
+                                <div class="form-group">
+                                    <div class="input-group login-input">
+                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                        <input id="email" type="email" class="form-control" name="email" placeholder="Email адрес"
+                                        value="{{ old('email') }}"
+                                        required autofocus>
+                                    </div>
+                                    <br>
+                                    <div class="input-group login-input">
+                                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                        <input id="password" type="password" class="form-control" name="password" placeholder="Пароль" required>
+                                    </div>
+                                    <div class="checkbox pull-left">
+                                        <input type="checkbox" id="checkbox_remember1">
+                                        <label for="checkbox_remember1">
+                                            <input type="checkbox" name="remember"> Remember Me
+                                        </label>
+                                    </div>
+                                    <button type="submit" id="submitSL" class="btn btn-ar btn-primary pull-right">Войти</button>
+                                    <div class="clearfix"></div>
                                 </div>
-                                <br>
-                                <div class="input-group login-input">
-                                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                    <input type="password" class="form-control" placeholder="Пароль">
-                                </div>
-                                <div class="checkbox pull-left">
-                                    <input type="checkbox" id="checkbox_remember1">
-                                    <label for="checkbox_remember1">
-                                        Запомнить меня
-                                    </label>
-                                </div>
-                                <button type="submit" class="btn btn-ar btn-primary pull-right">Войти</button>
-                                <div class="clearfix"></div>
-                            </div>
-                        </form>
+                                @if ( $errors->has('email') )
+
+                                @endif
+                            </form>
+                        </div>
                     </div>
-                </div>
+                @else
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="{{ url('/logout') }}"
+                                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+
+                                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
 
                 <div class="dropdown animated fadeInDown animation-delay-13">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search"></i></a>
@@ -97,51 +121,8 @@
         </div>
     </header>
 
-    <nav class="navbar navbar-default navbar-header-full navbar-dark yamm navbar-static-top" role="navigation" id="header">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <i class="fa fa-bars"></i>
-                </button>
-                <a id="ar-brand" class="navbar-brand hidden-lg hidden-md hidden-sm navbar-dark" href="#">Brain <span>Storm</span></a>
-            </div> <!-- navbar-header -->
+@include('includes.menu')
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="pull-right">
-                <a href="javascript:void(0);" class="sb-icon-navbar sb-toggle-right"><i class="fa fa-bars"></i></a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="primaryMenu">
-                        <a href="#" class="primaryMenu-toggle">Главная <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                    </li>
-                    <li class="primaryMenu">
-                        <a href="#" class="primaryMenu-toggle">Записи <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                    </li>
-                    <li class="primaryMenu">
-                        <a href="#" class="primaryMenu-toggle">Сервисы <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                    </li>
-                    <li class="primaryMenu">
-                        <a href="#" class="primaryMenu-toggle">Комментарии <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                    </li>
-                    <li class="primaryMenu">
-                        <a href="#" class="primaryMenu-toggle">Архив <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                    </li>
-                    <li class="primaryMenu">
-                        <a href="#" class="primaryMenu-toggle">О блоге <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                    </li>
-                    <li class="primaryMenu">
-                        <a href="#" class="primaryMenu-toggle">Контакты <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                    </li>
-                    <li class="primaryMenu">
-                        <a href="#" class="primaryMenu-toggle">Резюме <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
     <header class="main-header">
         <div class="container">
             <h1 class="page-title">Главная страница</h1>
@@ -154,35 +135,8 @@
     </header>
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
-                <article class="post animated fadeInLeft animation-delay-8">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <h3 class="post-title"><a href="#" class="transicion">Lorem ipsum Minim Ut in nulla labore sint nostrud</a></h3>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <img src="http://placehold.it/350x200" class="img-post img-responsive" alt="Image">
-                                </div>
-                                <div class="col-lg-6 post-content">
-                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
 
-                                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt voluptas sit aspernatur.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel-footer post-info-b">
-                            <div class="row">
-                                <div class="col-lg-10 col-md-9 col-sm-8">
-                                    <i class="fa fa-clock-o"></i> Oct 13, 2016 <i class="fa fa-user"></i> <a href="#">Alex_K</a> <i class="fa fa-folder-open"></i> <a href="#">PHP</a>, <a href="#">Mysql</a>.
-                                </div>
-                                <div class="col-lg-2 col-md-3 col-sm-4">
-                                    <a href="#" class="pull-right">Подробнее &raquo;</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </article> <!-- post -->
-            </div> <!-- col-md-8 -->
+            @yield('content')
 
             <div class="col-md-4">
                 <aside class="sidebar">
@@ -291,7 +245,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="footer-widget">
-                        <h3 class="footer-widget-title">Recent Post</h3>
+                        <h3 class="footer-widget-title">Последние записи</h3>
                         <div class="media">
                             <a class="pull-left" href="#"><img class="media-object" src="http://placehold.it/100" width="75" height="75" alt="image"></a>
                             <div class="media-body">
@@ -359,5 +313,6 @@
 <script src="{!! asset('js/DropdownHover.js') !!}"></script>
 <script src="{!! asset('js/app.js') !!}"></script>
 <script src="{!! asset('js/holder.js') !!}"></script>
+<script src="{!! asset('js/script.js') !!}"></script>
 </body>
 </html>

@@ -28,8 +28,8 @@ $factory->define(App\Models\Post::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->text(150),
         'alias' => $faker->slug,
-        'body' => $faker->text(600),
-        'body_preview' => $faker->text(250),
+        'body' => $faker->text(1200),
+        'body_preview' => $faker->text(550),
         'author_id' => 1,
         'published' => $faker->boolean(50),
     ];

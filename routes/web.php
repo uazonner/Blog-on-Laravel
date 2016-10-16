@@ -11,9 +11,14 @@
 |
 */
 
-Route::get('/', 'PostController@index');
 
+Route::get('/home', 'AuthController@index');
+
+Route::get('/', 'PostController@index');
+Route::get('/post/{id}', 'PostController@post');
 
 Auth::routes();
 
-Route::get('/auth', 'AuthController@index');
+
+Route::post('/post/like', 'PostController@like');
+Route::post('/simplelogin', 'MainController@simplelogin');

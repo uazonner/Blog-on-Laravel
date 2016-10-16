@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use AuthenticatesUsers;
 
 class AuthController extends Controller
 {
@@ -11,6 +12,7 @@ class AuthController extends Controller
      *
      * @return void
      */
+
     public function __construct()
     {
         $this->middleware('auth');

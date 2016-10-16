@@ -1,0 +1,9 @@
+Route::get('/', 'PostController@index');
+Route::get('/post/{id}', 'PostController@post');
+
+
+Auth::routes();
+
+/*Route::get('/auth', 'AuthController@index');*/
+
+Route::post('/post/like', 'PostController@like');

@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Models\Post;
 
 class User extends Authenticatable
 {
@@ -28,7 +27,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function posts() {
+    public function post() {
         return $this->hasMany(Post::class);
     }
 }
