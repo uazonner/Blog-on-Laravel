@@ -4,6 +4,7 @@
     <title>BrainStorm posts</title>
 @stop
 
+
 @section('content')
     <div class="col-md-12">
         <section>

@@ -15,7 +15,7 @@ Auth::routes();
 Route::get('/home', 'AuthController@index');
 Route::post('/simplelogin', 'MainController@simplelogin');
 
-Route::get('/', 'PostController@index');
+Route::get('/', ['as' => 'home', 'uses' => 'PostController@index']);
 Route::get('/post/{id}', 'PostController@post');
 Route::post('/post/like', 'PostController@like');
 
