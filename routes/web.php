@@ -22,4 +22,13 @@ Route::post('/post/like', 'PostController@like');
 
 
 // administration links
-Route::get('/admin', ['uses' => 'AdminController@index', 'middleware' => ['auth', 'admin']]); // Main admins page
+Route::get('/admin', ['uses' => 'AdminController@index', 'middleware' => ['auth', 'admin']]); // Main admin page
+
+//Route::get('/admin/users', ['uses' => 'AdminController@users', 'middleware' => ['auth', 'admin']]); // Users admin page
+//Route::get('/admin/users/add', ['uses' => 'AdminController@usersAddGet', 'middleware' => ['auth', 'admin']]); // Users add page
+//Route::post('/admin/user', ['uses' => 'AdminController@usersAddPost', 'middleware' => ['auth', 'admin']]); // Users add page
+/*Route::resource('user', 'UserController');*/
+
+Route::group(['as' => 'admin::', 'prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
+    Route::resource('users', 'UserController');
+});
