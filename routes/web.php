@@ -11,14 +11,15 @@
 |
 */
 
-
+Auth::routes();
 Route::get('/home', 'AuthController@index');
+Route::post('/simplelogin', 'MainController@simplelogin');
 
 Route::get('/', 'PostController@index');
 Route::get('/post/{id}', 'PostController@post');
-
-Auth::routes();
-
-
 Route::post('/post/like', 'PostController@like');
-Route::post('/simplelogin', 'MainController@simplelogin');
+
+
+
+// administration links
+Route::get('/admin', ['uses' => 'AdminController@index', 'middleware' => ['auth', 'admin']]); // Main admins page

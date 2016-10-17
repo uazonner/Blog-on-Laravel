@@ -891,6 +891,10 @@ h6 {
 a {
   color: #c37744;
 }
+a.user-box {
+  color: #c37744!important;
+  border: none!important;
+}
 .strong {
   font-weight: 400;
 }
