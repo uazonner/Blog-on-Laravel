@@ -7,16 +7,9 @@
 @section('header')
     <header class="main-header">
         <div class="container">
-            <h1 class="page-title">Главная страница</h1>
-
             {!! Breadcrumbs::render('home') !!}
-{{--            <ol class="breadcrumb pull-right">
-                <li><a href="#">Блог</a></li>
-                <li class="active">Главная страница</li>
-            </ol>--}}
         </div>
     </header>
-
 @stop
 
 @section('content')

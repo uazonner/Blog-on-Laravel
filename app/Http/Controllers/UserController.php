@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Validator;
 use App\Http\Requests;
 use App\User;
 
@@ -55,29 +56,11 @@ class UserController extends Controller
             'email' => 'required|unique:users|max:150|email',
             'password' => 'required|confirmed|max:255',
             'remember_token' => 'string|alpha_dash',
-            'active' => 'boolean',
-            'admin' => 'boolean',
         ]);
 
-        if ($validator->fails()) {
-            return redirect('post/create')
-                ->withErrors($validator)
-                ->withInput();
+        if ($validator) {
+            return redirect()->back()->withErrors($validator);
         }
-/*
-        $active = $data['active'];
-        $admin = $data['admin'];
-
-        if ($data['active'] === '') {
-            $active = 1;
-        } else {
-            $active = 0;
-        }
-        if ($data['admin'] === '') {
-            $admin = 1;
-        } else {
-            $admin = 0;
-        }*/
 
         $user = new User;
 
@@ -90,7 +73,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->back();
+        return redirect()->back()->with('succes', 'Пользователь успешно добавлен');
     }
 
     /**
@@ -112,7 +95,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('user.edit', ['user' => $user]);
     }
 
     /**
@@ -124,7 +108,41 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $validator = $this->validate($request, [
+            'password' => 'confirmed|max:255',
+            'remember_token' => 'string|alpha_dash',
+        ]);
+
+        if ($user->name != $request->name) {
+            $validator = $this->validate($request, [
+                'name' => 'required|unique:users|min:3|max:75|alpha_dash',
+            ]);
+
+            $user->name = ($request->name);
+        }
+
+        if ($user->email != $request->email) {
+            $validator = $this->validate($request, [
+                'email' => 'required|unique:users|max:150|email',
+            ]);
+
+            $user->email = ($request->email);
+        }
+
+        if ($validator) {
+            return redirect()->back()->withErrors($validator);
+        }
+
+        $user->password = (bcrypt($request->password));
+        $user->remember_token = ($request->_token);
+        $user->active = ($request->active);
+        $user->admin = ($request->admin);
+
+        $user->save();
+
+
+        return redirect()->back()->with('succes', 'Данные успешно обновлены');
     }
 
     /**
@@ -135,6 +153,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+/*        User::find($id)->delete;
+
+        return redirect()->back();*/
     }
 }

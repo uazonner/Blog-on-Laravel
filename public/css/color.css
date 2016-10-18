@@ -8,6 +8,7 @@
 /* ---------------------------------------------------- */
 @import url(http://fonts.googleapis.com/css?family=Lato:100,300,400|Open+Sans:400italic,400,600|Muli:300|Indie+Flower:400|Oswald:400,700,300);
 @import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Poiret+One');
 /* ---------------------------------------------------- */
 /* Global Variables */
 /* ---------------------------------------------------- */
@@ -935,6 +936,12 @@ p.small {
   height: 100%;
   border: 0;
 }
+.page-title-main {
+  color: grey;
+  font-family: "Poiret One",cursive;
+  font-size: 1.5em;
+  margin: 0;
+}
 .video {
   position: relative;
   padding-bottom: 56.25%;
@@ -1285,7 +1292,7 @@ hr.double {
   background-color: #c37744;
   color: #fff;
   padding: 20px 0;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   position: relative;
 }
 .main-header.main-header-inverse {
@@ -3155,13 +3162,11 @@ textarea.form-control:focus {
 }
 .main-header .breadcrumb {
   margin: 0;
-  display: inline-block;
   background: none;
   color: #fff;
   font-size: 1.1em;
-  position: absolute;
   top: 0px;
-  right: 10px;
+  float: right;
 }
 .main-header .breadcrumb li {
   color: #eee;

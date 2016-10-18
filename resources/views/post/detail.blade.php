@@ -4,6 +4,13 @@
     <title>Full page post</title>
 @stop
 
+@section('header')
+    <header class="main-header">
+        <div class="container">
+           {!! Breadcrumbs::render('home') !!}
+        </div>
+    </header>
+@stop
 
 @section('content')
 <div class="col-md-8">

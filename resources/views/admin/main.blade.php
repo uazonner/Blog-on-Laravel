@@ -4,9 +4,18 @@
     <title>BrainStorm posts</title>
 @stop
 
+@section('header')
+    <header class="main-header">
+        <div class="container">
+            {!! Breadcrumbs::render('admin') !!}
+        </div>
+    </header>
+@stop
+
 @section('content')
     <div class="col-md-12">
         <section>
+            <h2 class="page-header no-margin-top">Администрирование</h2>
             <div class="row">
                 <div class="col-md-3">
                     <div class="content-box box-default">

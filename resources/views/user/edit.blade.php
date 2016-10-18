@@ -15,20 +15,13 @@
 @section('content')
     <div class="col-md-12">
         <section>
-            <h2 class="page-header no-margin-top">Добавить нового пользователя</h2>
-            <div class="pull-right">
-                <a href="{{ url('admin/users/create') }}" class="btn btn-ar btn-default">
-                    <i class="fa fa-plus-square" aria-hidden="true"></i> Добавить пользователя
-                </a>
-            </div>
-            <div class="clearfix"></div>
-            <hr class="dotted">
+            <h2 class="page-header no-margin-top">Редактирование пользователя: {{ $user->name }}</h2>
+
             @if (Session::has('succes'))
                 <div class="alert alert-success">
-                        {!! Session::get('succes') !!}
+                    {!! Session::get('succes') !!}
                 </div>
             @endif
-
 
             @if (count($errors) > 0)
                 <div class="alert alert-danger">
@@ -40,17 +33,16 @@
                     </ul>
                 </div>
             @endif
-
             <div class="panel panel-default">
                 <div class="panel-body">
-                    {!! Form::open(['route' => 'admin::users.store']) !!}
+                    {!! Form::open(['method' => 'PATCH', 'route' => ['admin::users.update', $user->id]]) !!}
                         <div class="form-group">
                             {{ Form::label('name', 'Имя пользователя') }}
-                            {{ Form::text('name', null, ['class' => 'form-control']) }}
+                            {{ Form::text('name', $user->name, ['class' => 'form-control']) }}
                         </div>
                         <div class="form-group">
                             {{ Form::label('email', 'Email адрес') }}
-                            {{ Form::email('email', null, ['class' => 'form-control']) }}
+                            {{ Form::email('email', $user->email, ['class' => 'form-control']) }}
                         </div>
                         <div class="form-group">
                             {{ Form::label('password', 'Пароль') }}
@@ -62,12 +54,12 @@
                         </div>
                         <div class="checkbox">
                             {{ Form::hidden('active', '0') }}
-                            {{ Form::checkbox('active', '1', true, ['id' => 'active']) }}
+                            {{ Form::checkbox('active', '1', $user->active, ['id' => 'active']) }}
                             {{ Form::label('active', 'Активный') }}
                         </div>
                         <div class="checkbox">
                             {{ Form::hidden('admin', '0') }}
-                            {{ Form::checkbox('admin', '1', false, ['id' => 'admin']) }}
+                            {{ Form::checkbox('admin', '1', $user->admin, ['id' => 'admin']) }}
                             {{ Form::label('admin', 'Администратор') }}
                         </div>
                         {{ Form::submit('Сохранить', ['class' => 'btn btn-ar btn-primary']) }}

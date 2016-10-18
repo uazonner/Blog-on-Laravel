@@ -8,11 +8,17 @@ use Illuminate\Http\Request;
 //use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Post;
 
 class MainController extends Controller
 {
 
     use AuthenticatesUsers;
+
+    public function index() {
+        $postData = Post::where('published', '=', '1')->paginate(5);
+        return view('post.list', ['posts' => $postData]);
+    }
 
     public function simplelogin(Request $req)
     {

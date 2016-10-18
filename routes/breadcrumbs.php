@@ -4,7 +4,24 @@
 Breadcrumbs::register('home', function($breadcrumbs)
 {
     $breadcrumbs->push('Главная', route('home'));
-    $breadcrumbs->push('Записи блога', route('home'));
+});
+
+Breadcrumbs::register('admin', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Администрирование', route('admin::main'));
+});
+
+Breadcrumbs::register('admin.users', function($breadcrumbs)
+{
+    $breadcrumbs->parent('admin');
+    $breadcrumbs->push('Пользователи', route('admin::users.index'));
+});
+
+Breadcrumbs::register('admin.users.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('admin.users');
+    $breadcrumbs->push('Добавить пользователя', route('admin::users.create'));
 });
 
 /*// Home > About
